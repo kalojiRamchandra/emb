@@ -1,0 +1,115 @@
+buzzer
+// Pin connected to the piezo buzzer
+const int buzzerPin = 9;
+
+// Define the melody notes (0 = rest)
+int melody[] = {NOTE_C4, NOTE_G3, NOTE_E3, NOTE_A3, NOTE_B3, NOTE_AS3, NOTE_A3, NOTE_G3, NOTE_E4, NOTE_D4, NOTE_E4, NOTE_A4, 0};
+int noteDurations[] = {4, 8, 8, 4, 4, 4, 4, 4, 4, 4, 8, 4, 4};
+
+void setup() {
+  // No setup is required
+}
+
+void loop() {
+  for (int i = 0; melody[i] != 0; i++) {
+    int noteDuration = 1000 / noteDurations[i];
+    tone(buzzerPin, melody[i], noteDuration);
+    delay(noteDuration + 50); // Add a small gap between notes
+  }
+  noTone(buzzerPin); // Stop playing
+  delay(500); // Delay before playing the melody again
+}
+
+sound sen
+const int soundPin = A0; // Analog pin for the sound sensor
+const int ledPin = 13;   // Digital pin for the LED
+
+int threshold = 500;     // Adjust this threshold based on your environment
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(soundPin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int soundValue = analogRead(soundPin);
+
+  if (soundValue > threshold) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Clap detected!");
+    delay(500);  // Delay to avoid multiple triggers on a single clap
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+}
+
+traffic
+const int redPin = 13;    // Red LED is connected to digital pin 13
+const int yellowPin = 12; // Yellow LED is connected to digital pin 12
+const int greenPin = 11;  // Green LED is connected to digital pin 11
+
+void setup() {
+  // Set the LED pins as OUTPUT
+  pinMode(redPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+}
+
+void loop() {
+  // Red light (stop)
+  digitalWrite(redPin, HIGH);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  delay(2000); // Stay red for 2 seconds
+
+  // Red and yellow light (prepare to go)
+  digitalWrite(redPin, HIGH);
+  digitalWrite(yellowPin, HIGH);
+  digitalWrite(greenPin, LOW);
+  delay(1000); // Show red and yellow for 1 second
+
+  // Green light (go)
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, HIGH);
+  delay(2000); // Stay green for 2 seconds
+
+  // Yellow light (prepare to stop)
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, HIGH);
+  digitalWrite(greenPin, LOW);
+  delay(1000); // Show yellow for 1 second
+}
+
+ultra
+#define trig 5
+#define eco 9
+int buzzer=10;
+float duration;
+float cm;
+
+void setup(){
+  pinMode(trig, OUTPUT);
+  pinMode(eco, INPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600);
+}
+void loop(){
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(buzzer, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+ 
+
+  duration=pulseIn(eco,HIGH);
+  cm=duration*0.034/2;
+
+  Serial.print("distance=");
+  Serial.print(cm);
+  Serial.print("\n");
+  delay(10);
+}
